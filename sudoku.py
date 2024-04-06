@@ -9,7 +9,7 @@ Created on Thu Mar 28 17:08:34 2024
 SIZE = 9
 board = [0]*(SIZE*SIZE)
 
-def possible(board, position, number):
+def possible(board, position, number): # is it possible to put number at position in board ?
     
     col = position % 9
     row = position // 9
@@ -32,32 +32,39 @@ def possible(board, position, number):
 
     return True
 
-def solve(board):
+def solve(board, max_solutions=10000):
     
-    q = [(board[:],0)]
+    q = [(board[:],0)] # queue with incomplete boards and at what position to continue to try
     tries = 1
+    solutions  = []
 
-    while q:
+    while q and (len(solutions)<max_solutions):
 
-        print(tries, len(q))
+        if tries%1000==0: print(tries, len(q), len(solutions))
         tries += 1 
 
         #print("Len q:", len(q))
 
         board, position = q.pop()
         
-        for number in range(1,10):
+        for number in range(1,10): # try to put numer 1 to 9 in position
             
             if possible(board, position, number):
                 #print("Put", number, "in position", _pos)
                 _board = board[:]
                 _board[position] = number
                 _position = position + 1
-                if _position == SIZE*SIZE: return True, _board
+                
+                if _position == SIZE*SIZE: # found a solution
+                    #print("Solution:")
+                    #print(_board)
+                    solutions.append(_board)
+                    continue
+                    # return True, _board
 
                 q.append( (_board, _position))
                 
-    return False, _board 
+    return solutions 
 
     
 def print_board(board):
@@ -72,9 +79,9 @@ def print_board(board):
         
 if __name__ == "__main__":
     
-    c, board = solve(board)
-    print_board(board)
-    print(c)
+    s = solve(board)
+    # for board in s: print_board(board)
+    print(len(s))
     
     
     
