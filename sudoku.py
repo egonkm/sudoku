@@ -3,7 +3,7 @@
 """
 Created on Thu Mar 28 17:08:34 2024
 
-@author: brengineer
+@author: egon
 """
 import random 
 
@@ -101,7 +101,7 @@ def print_board(board):
         
 if __name__ == "__main__":
     
-    for fill in range(1,23): # how many numbers already in our board before we try to solve it ? 
+    for fill in range(1,24): # how many numbers already in our board before we try to solve it ? 
 
         print("Fill:", fill)
         partial_board = random_board(fill)
